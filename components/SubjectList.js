@@ -1,0 +1,28 @@
+import React, { useContext, useState } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS } from '../constants/theme'
+import { MainContext } from '../context';
+import { QueueSubject } from './QueueSubject';
+
+export const SubjectList = () => {
+
+
+
+    const { subjects, setSubjects, deleteSubject } = useContext(MainContext)
+
+    return (
+        <FlatList
+            data={subjects}
+            renderItem={({ item }) => (
+                <QueueSubject
+                    subject={item.subject}
+                    lastStudent={item.lastStudent}
+                    deleteSubject={deleteSubject}
+                    id={item.id}
+                />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+
+        />
+    )
+}
