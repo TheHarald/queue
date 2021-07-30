@@ -8,7 +8,7 @@ export const SubjectList = () => {
 
 
 
-    const { subjects, setSubjects, deleteSubject } = useContext(MainContext)
+    const { subjects, deleteSubject } = useContext(MainContext)
 
     return (
         <FlatList

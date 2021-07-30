@@ -6,7 +6,6 @@ export const ImageButton = ({ deleteSubject, id }) => {
 
     const handleDelete = () => {
         deleteSubject(id)
-        console.log(id)
     }
 
     const handleDeleteWithAlert = () => Alert.alert(

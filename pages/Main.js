@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Header } from '../components/Header';
 import { QueueSubject } from '../components/QueueSubject';
@@ -9,14 +9,59 @@ import { Button } from '../components/Button';
 import { AddWindow } from '../components/AddWindow';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MainContext } from '../context';
+import { Subject } from './Subject';
 
 export const Main = () => {
 
     const [visibleModal, setVisibleModal] = useState(false);
     const [value, setValue] = useState('')
+    const [visibleSubject, setVisibleSubject] = useState(false)
+    const [currentSubject, setCurrentSubject] = useState({
+        id: '12',
+        subject: 'TEst123',
+        students: [
+            {
+                name: 'Ivanov Ivan',
+                position: '1'
+            },
+            {
+                name: 'Pavlov Ivan',
+                position: '2'
+            },
+            {
+                name: 'Petrov Andrew',
+                position: '3'
+            }]
+    })
+
+    const [test, setTest] = useState(0)
+
+    const inc = () => {
+        console.log('test', test)
+        setTest(a => a + 1)
+        console.log('test', test)
+    }
 
 
-    const [subjects, setSubjects] = useState()
+    const [subjects, setSubjects] = useState([
+        {
+            id: '12',
+            subject: 'TEst',
+            students: [
+                {
+                    name: 'Ivanov Ivan',
+                    position: '1'
+                },
+                {
+                    name: 'Pavlov Ivan',
+                    position: '2'
+                },
+                {
+                    name: 'Petrov Andrew',
+                    position: '3'
+                }]
+        }
+    ])
 
     const addSubject = (title) => {
         setSubjects(prevState => [
@@ -24,12 +69,23 @@ export const Main = () => {
             {
                 id: Date.now().toString(),
                 subject: title,
-                lastStudent: {
-                    name: 'none',
-                    position: 'none'
-                }
+                students: [
+                    {
+                        name: 'Ivanov Ivan',
+                        position: '1'
+                    },
+                    {
+                        name: 'Pavlov Ivan',
+                        position: '2'
+                    },
+                    {
+                        name: 'Petrov Andrew',
+                        position: '3'
+                    }
+                ]
             }
         ]);
+
 
     }
 
@@ -46,6 +102,13 @@ export const Main = () => {
         setSubjects(prev => prev.filter(subject => subject.id !== id))
     }
 
+    const findCurrentSubject = (id) => {
+        console.log(subjects)
+        let temp = subjects.filter(subject => subject.id === id)
+        console.log('current subject set --------------', temp)
+        setCurrentSubject(temp)
+    }
+
     const handleAdd = () => {
         if (value !== '') {
             addSubject(value)
@@ -55,6 +118,8 @@ export const Main = () => {
         } else {
             Alert.alert('Введите дисциплину')
         }
+        console.log('add subjects -----------')
+        console.log(subjects);
     }
 
     const handleClose = () => {
@@ -65,7 +130,7 @@ export const Main = () => {
 
 
     const saveInStorage = async () => {
-        console.log('saving')
+        console.log('saving ------------------')
         console.log(subjects)
         try {
             await AsyncStorage.setItem('subjects', JSON.stringify(subjects))
@@ -113,12 +178,15 @@ export const Main = () => {
             subjects, setSubjects,
             addSubject, handleAdd,
             handleClose, deleteSubject,
-            loadFromStorage, log, add
+            loadFromStorage, log, add, inc,
+            visibleSubject, setVisibleSubject,
+            findCurrentSubject, currentSubject
 
         }}>
             <View style={styles.container}>
                 <Header />
                 <SubjectList />
+                <Subject />
                 <AddWindow />
                 <Button title={'Добавить очередь'} color={COLORS.blue} onPress={() => setVisibleModal(true)} />
             </View>

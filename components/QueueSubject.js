@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { COLORS } from '../constants/theme'
+import { MainContext } from '../context';
 import { ImageButton } from './ImageButton';
 
-export const QueueSubject = ({ subject, lastStudent, deleteSubject, id }) => {
+export const QueueSubject = ({ subject, students, deleteSubject, id }) => {
 
+    const { setVisibleSubject, findCurrentSubject } = useContext(MainContext)
 
-
+    const test = () => {
+        console.log('card pressed', id)
+        setVisibleSubject(true)
+        findCurrentSubject(id)
+        console.log('passed')
+    }
 
     return (
-        <TouchableOpacity style={styles.card} onPress={() => console.log('card pressed', id)}>
+        <TouchableOpacity style={styles.card} onPress={test}>
             <View style={styles.title}>
                 <Text style={styles.text}>{subject}</Text>
                 <ImageButton deleteSubject={deleteSubject} id={id} />
             </View>
-            <Text style={styles.lastinfo}>
-                Последний {lastStudent.name} {lastStudent.position}
+            <Text style={styles.lastinfo} onPress={() => console.log(students)}>
+                Последний
             </Text>
         </TouchableOpacity>
     )

@@ -7,12 +7,12 @@ import { MainContext } from '../context';
 
 export const Header = () => {
 
-    const { loadFromStorage, log } = useContext(MainContext)
+    const { loadFromStorage, log, inc, setVisibleSubject } = useContext(MainContext)
 
     return (
         <View style={styles.header}>
             <Text style={styles.text}>Очереди</Text>
-            <TouchableOpacity style={styles.button} onPress={loadFromStorage}>
+            <TouchableOpacity style={styles.button} onPress={() => setVisibleSubject(true)}>
 
             </TouchableOpacity>
         </View>
@@ -27,7 +27,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
+        shadowColor: "black",
+        shadowRadius: 3,
+        shadowOffset: { width: 3, height: 3 }
     },
     text: {
         marginTop: 34,
