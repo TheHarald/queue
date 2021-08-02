@@ -14,7 +14,7 @@ export const Subject = () => {
     return (
         <Modal visible={visibleSubject} >
             <View style={styles.main} >
-                <Text style={styles.text} onPress={() => setVisibleSubject(false)}>{currentSubject.subject}</Text>
+                <Text style={styles.text} onPress={() => setVisibleSubject(false)}>Дисциплина {currentSubject.subject}</Text>
                 <FlatList
                     data={currentSubject.students}
                     renderItem={({ item }) => (

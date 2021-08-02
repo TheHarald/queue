@@ -153,7 +153,14 @@ export const Main = () => {
 
     useEffect(() => {
         loadFromStorage();
+        console.log('useeeffect load')
     }, [])
+
+    useEffect(() => {
+        console.log('useeffect subjects')
+        console.log(subjects)
+        saveInStorage()
+    }, [subjects])
 
     const removeFromStorage = async () => {
         try {

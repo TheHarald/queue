@@ -5,10 +5,10 @@ import { TestContext } from '../../context';
 
 export const Rect = () => {
 
-    const { log, print } = useContext(TestContext)
+    const { log, print, addObj, value } = useContext(TestContext)
     return (
         <View style={styles.main}>
-            <Square toPrint={() => log('treeee')} />
+            <Square toPrint={() => addObj(value)} />
             <Square toPrint={print} />
             <Square toPrint={log} />
         </View>)
