@@ -6,8 +6,6 @@ import { QueueSubject } from './QueueSubject';
 
 export const SubjectList = () => {
 
-
-
     const { subjects, deleteSubject } = useContext(MainContext)
 
     return (
@@ -16,13 +14,12 @@ export const SubjectList = () => {
             renderItem={({ item }) => (
                 <QueueSubject
                     subject={item.subject}
-                    lastStudent={item.lastStudent}
+                    students={item.students}
                     deleteSubject={deleteSubject}
                     id={item.id}
                 />
             )}
             keyExtractor={(item) => item.id.toString()}
-
         />
     )
 }

@@ -79,7 +79,7 @@ export const Main = () => {
                         position: '2'
                     },
                     {
-                        name: 'Petrov Andrew',
+                        name: 'Ivanov Armen',
                         position: '3'
                     }
                 ]
@@ -103,10 +103,11 @@ export const Main = () => {
     }
 
     const findCurrentSubject = (id) => {
-        console.log(subjects)
+        //console.log(subjects)
         let temp = subjects.filter(subject => subject.id === id)
         console.log('current subject set --------------', temp)
         setCurrentSubject(temp)
+        console.log('========================================s', currentSubject)
     }
 
     const handleAdd = () => {

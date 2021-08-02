@@ -12,7 +12,7 @@ export const Header = () => {
     return (
         <View style={styles.header}>
             <Text style={styles.text}>Очереди</Text>
-            <TouchableOpacity style={styles.button} onPress={log}>
+            <TouchableOpacity style={styles.button} onPress={() => setVisibleSubject(true)}>
 
             </TouchableOpacity>
         </View>

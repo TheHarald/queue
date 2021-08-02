@@ -14,7 +14,9 @@ export const Subject = () => {
     return (
         <Modal visible={visibleSubject} >
             <View style={styles.main} >
-                <Text style={styles.text} onPress={() => setVisibleSubject(false)}>Дисциплина {currentSubject.subject}</Text>
+                <Text style={styles.text}
+                    onPress={() => setVisibleSubject(false)}>
+                    Дисциплина {currentSubject.subject}</Text>
                 <FlatList
                     data={currentSubject.students}
                     renderItem={({ item }) => (
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         alignSelf: 'center',
-        marginTop: 10,
+        marginTop: 18,
         marginBottom: 10
 
     },

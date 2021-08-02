@@ -10,9 +10,11 @@ export const QueueSubject = ({ subject, students, deleteSubject, id }) => {
 
     const test = () => {
         console.log('card pressed', id)
-        setVisibleSubject(true)
+        console.log(subject)
+        console.log(students)
         findCurrentSubject(id)
-        console.log('passed')
+        // setVisibleSubject(true)
+        //console.log('passed')
     }
 
     return (
@@ -21,8 +23,8 @@ export const QueueSubject = ({ subject, students, deleteSubject, id }) => {
                 <Text style={styles.text}>{subject}</Text>
                 <ImageButton deleteSubject={deleteSubject} id={id} />
             </View>
-            <Text style={styles.lastinfo} onPress={() => console.log(students)}>
-                Последний
+            <Text style={styles.lastinfo} onPress={() => console.log('sddfsf', students[students.length - 1])}>
+                Последний {students.reduce((acc, student) => acc = acc > student.position ? acc.name : student.name, 0)}
             </Text>
         </TouchableOpacity>
     )
