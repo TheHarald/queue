@@ -7,7 +7,7 @@ export const QueuePerson = ({ student, position }) => {
         <View style={{ justifyContent: 'flex-end' }}>
             <View style={styles.main}>
                 <Text style={styles.text}>{position} {student}</Text>
-                <Text style={styles.text}>Статус: сдаёт</Text>
+                <Text style={position !== '1' ? styles.textWait : styles.textPass}>Статус: сдаёт</Text>
 
             </View>
         </View>
@@ -29,6 +29,20 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginHorizontal: 8,
         textAlignVertical: 'center'
+    },
+    textPass: {
+        fontSize: 17,
+        marginHorizontal: 8,
+        textAlignVertical: 'center',
+        color: COLORS.green
+    },
+    textWait: {
+        fontSize: 17,
+        marginHorizontal: 8,
+        textAlignVertical: 'center',
+        color: COLORS.yellow
     }
+
+
 })
 

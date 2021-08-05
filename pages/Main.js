@@ -17,28 +17,14 @@ export const Main = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [value, setValue] = useState('')
     const [visibleSubject, setVisibleSubject] = useState(false)
-    const [currentSubject, setCurrentSubject] = useState({
-        id: '12',
-        subject: 'TEst123',
-        students: [
-            {
-                name: 'Ivanov Ivan',
-                position: '1'
-            },
-            {
-                name: 'Pavlov Ivan',
-                position: '2'
-            },
-            {
-                name: 'Petrov Andrew',
-                position: '3'
-            }]
-    })
+    const [currentSubject, setCurrentSubject] = useState()
+
+    const url = 'http://192.168.0.107:3000/subjects'
 
 
     const getSubjects = async () => {
         try {
-            const response = await fetch('http://192.168.0.107:3000/subjects');
+            const response = await fetch(url);
             const json = await response.json();
             console.log(json);
             setSubjects(json);
@@ -75,9 +61,8 @@ export const Main = () => {
                 ]
             })
         };
-        console.log('aasds')
 
-        fetch('http://192.168.0.107:3000/subjects', requestOptions)
+        fetch(url, requestOptions)
             .then(response => response.json())
             .then(data => { console.log(data); getSubjects() });
     }
@@ -86,7 +71,7 @@ export const Main = () => {
         const requestOptions = {
             method: 'DELETE'
         }
-        fetch(`http://192.168.0.107:3000/subjects/${id}`, requestOptions)
+        fetch(`${url}/${id}`, requestOptions)
             .then(response => response.json())
             .then(data => { console.log(data); getSubjects() });
     }
@@ -130,20 +115,6 @@ export const Main = () => {
     }
 
 
-
-    // const deleteSubject = (id) => {
-    //     console.log('try to delete')
-    //     setSubjects(prev => prev.filter(subject => subject.id !== id))
-    // }
-
-    const findCurrentSubject = (id) => {
-        //console.log(subjects)
-        let temp = subjects.filter(subject => subject.id === id)
-        console.log('current subject set --------------', temp)
-        setCurrentSubject(temp)
-        console.log('========================================s', currentSubject)
-    }
-
     const handleAdd = () => {
         if (value !== '') {
             postSubject(value)
@@ -186,25 +157,11 @@ export const Main = () => {
     }
 
     useEffect(() => {
+        console.log('get subjects from db')
         getSubjects();
-        console.log('useeeffect load')
     }, [])
 
-    // useEffect(() => {
-    //     console.log('useeffect subjects')
-    //     console.log(subjects)
-    //     saveInStorage()
-    // }, [subjects])
 
-    const removeFromStorage = async () => {
-        try {
-            await AsyncStorage.removeItem('subjects')
-        } catch (error) {
-            alert(error)
-        } finally {
-            setValue('')
-        }
-    }
 
     const add = async () => {
         handleAdd();
@@ -218,12 +175,11 @@ export const Main = () => {
             value, setValue,
             subjects, setSubjects,
             addSubject, handleAdd,
-            handleClose,
+            handleClose, url,
             loadFromStorage, log, add,
-            visibleSubject, setVisibleSubject,
-            findCurrentSubject, currentSubject,
+            visibleSubject, setVisibleSubject, currentSubject,
             getSubjects, postSubject,
-            deleteSubject
+            deleteSubject, isLoading, setIsLoading, setCurrentSubject
 
         }}>
             <View style={styles.container}>

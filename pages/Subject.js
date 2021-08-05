@@ -9,22 +9,27 @@ import { MainContext } from '../context';
 
 export const Subject = () => {
 
-    const { visibleSubject, setVisibleSubject, currentSubject } = useContext(MainContext)
+    const { visibleSubject, setVisibleSubject, currentSubject, isLoading } = useContext(MainContext)
 
     return (
         <Modal visible={visibleSubject} >
             <View style={styles.main} >
-                <Text style={styles.text}
-                    onPress={() => setVisibleSubject(false)}>
-                    Дисциплина {currentSubject.subject}</Text>
-                <FlatList
-                    data={currentSubject.students}
-                    renderItem={({ item }) => (
-                        <QueuePerson student={item.name} position={item.position} />
-                    )}
-                    keyExtractor={(item) => item.position}
 
-                />
+                {true ? <Text>Loadding</Text> :
+                    <View>
+                        <Text style={styles.text}
+                            onPress={() => setVisibleSubject(false)}>
+                            {currentSubject.subject}</Text>
+
+                        <FlatList
+                            data={currentSubject.students}
+                            renderItem={({ item }) => (
+                                <QueuePerson student={item.name} position={item.position} />
+                            )}
+                            keyExtractor={(item) => item.position}
+
+                        />
+                    </View>}
 
             </View>
         </Modal>
