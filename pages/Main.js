@@ -14,6 +14,7 @@ import { Subject } from './Subject';
 export const Main = () => {
 
     const [visibleModal, setVisibleModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
     const [value, setValue] = useState('')
     const [visibleSubject, setVisibleSubject] = useState(false)
     const [currentSubject, setCurrentSubject] = useState({
@@ -34,34 +35,67 @@ export const Main = () => {
             }]
     })
 
-    const [test, setTest] = useState(0)
 
-    const inc = () => {
-        console.log('test', test)
-        setTest(a => a + 1)
-        console.log('test', test)
+    const getSubjects = async () => {
+        try {
+            const response = await fetch('http://192.168.0.107:3000/subjects');
+            const json = await response.json();
+            console.log(json);
+            setSubjects(json);
+            setIsLoading(false);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 
-    const [subjects, setSubjects] = useState([
-        {
-            id: '12',
-            subject: 'TEst',
-            students: [
-                {
-                    name: 'Ivanov Ivan',
-                    position: '1'
-                },
-                {
-                    name: 'Pavlov Ivan',
-                    position: '2'
-                },
-                {
-                    name: 'Petrov Andrew',
-                    position: '3'
-                }]
+    const postSubject = (title) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: Date.now().toString(),
+                subject: title,
+                students: [
+                    {
+                        id: '13242',
+                        name: 'Ivanov Ivan',
+                        position: '1'
+                    },
+                    {
+                        id: '13241',
+                        name: 'Pavlov Ivan',
+                        position: '2'
+                    },
+                    {
+                        id: '131',
+                        name: 'Ivanov Armen',
+                        position: '3'
+                    }
+                ]
+            })
+        };
+        console.log('aasds')
+
+        fetch('http://192.168.0.107:3000/subjects', requestOptions)
+            .then(response => response.json())
+            .then(data => { console.log(data); getSubjects() });
+    }
+
+    const deleteSubject = (id) => {
+        const requestOptions = {
+            method: 'DELETE'
         }
-    ])
+        fetch(`http://192.168.0.107:3000/subjects/${id}`, requestOptions)
+            .then(response => response.json())
+            .then(data => { console.log(data); getSubjects() });
+    }
+
+
+
+
+
+    const [subjects, setSubjects] = useState()
 
     const addSubject = (title) => {
         setSubjects(prevState => [
@@ -97,10 +131,10 @@ export const Main = () => {
 
 
 
-    const deleteSubject = (id) => {
-        console.log('try to delete')
-        setSubjects(prev => prev.filter(subject => subject.id !== id))
-    }
+    // const deleteSubject = (id) => {
+    //     console.log('try to delete')
+    //     setSubjects(prev => prev.filter(subject => subject.id !== id))
+    // }
 
     const findCurrentSubject = (id) => {
         //console.log(subjects)
@@ -112,15 +146,14 @@ export const Main = () => {
 
     const handleAdd = () => {
         if (value !== '') {
-            addSubject(value)
+            postSubject(value)
             setValue('')
             setVisibleModal(false)
 
         } else {
             Alert.alert('Введите дисциплину')
         }
-        console.log('add subjects -----------')
-        console.log(subjects);
+        console.log('--------- add subjects -----------')
     }
 
     const handleClose = () => {
@@ -153,15 +186,15 @@ export const Main = () => {
     }
 
     useEffect(() => {
-        loadFromStorage();
+        getSubjects();
         console.log('useeeffect load')
     }, [])
 
-    useEffect(() => {
-        console.log('useeffect subjects')
-        console.log(subjects)
-        saveInStorage()
-    }, [subjects])
+    // useEffect(() => {
+    //     console.log('useeffect subjects')
+    //     console.log(subjects)
+    //     saveInStorage()
+    // }, [subjects])
 
     const removeFromStorage = async () => {
         try {
@@ -185,10 +218,12 @@ export const Main = () => {
             value, setValue,
             subjects, setSubjects,
             addSubject, handleAdd,
-            handleClose, deleteSubject,
-            loadFromStorage, log, add, inc,
+            handleClose,
+            loadFromStorage, log, add,
             visibleSubject, setVisibleSubject,
-            findCurrentSubject, currentSubject
+            findCurrentSubject, currentSubject,
+            getSubjects, postSubject,
+            deleteSubject
 
         }}>
             <View style={styles.container}>

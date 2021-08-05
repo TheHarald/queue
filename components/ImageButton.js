@@ -5,8 +5,10 @@ import { COLORS } from '../constants/theme'
 export const ImageButton = ({ deleteSubject, id }) => {
 
     const handleDelete = () => {
-        deleteSubject(id)
+        console.log(id)
+        deleteSubject(id);
     }
+
 
     const handleDeleteWithAlert = () => Alert.alert(
         'Вы уверены что хотите удалить очередь?',

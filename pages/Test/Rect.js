@@ -5,12 +5,12 @@ import { TestContext } from '../../context';
 
 export const Rect = () => {
 
-    const { log, print, addObj, value } = useContext(TestContext)
+    const { log, print, value, printData, postSubject, deleteSubject } = useContext(TestContext)
     return (
         <View style={styles.main}>
-            <Square toPrint={() => addObj(value)} />
-            <Square toPrint={print} />
-            <Square toPrint={log} />
+            <Square toPrint={printData} />
+            <Square toPrint={() => deleteSubject('1628182027918')} />
+            <Square toPrint={postSubject} />
         </View>)
 
 }

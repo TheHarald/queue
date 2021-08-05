@@ -7,12 +7,12 @@ import { MainContext } from '../context';
 
 export const Header = () => {
 
-    const { loadFromStorage, log, inc, setVisibleSubject } = useContext(MainContext)
+    const { loadFromStorage, log, getSubjects, setVisibleSubject } = useContext(MainContext)
 
     return (
         <View style={styles.header}>
             <Text style={styles.text}>Очереди</Text>
-            <TouchableOpacity style={styles.button} onPress={() => setVisibleSubject(true)}>
+            <TouchableOpacity style={styles.button} onPress={getSubjects}>
 
             </TouchableOpacity>
         </View>
