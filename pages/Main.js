@@ -11,13 +11,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MainContext } from '../context';
 import { Subject } from './Subject';
 
-export const Main = () => {
+export const Main = ({ navigation }) => {
 
     const [visibleModal, setVisibleModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
     const [value, setValue] = useState('')
     const [visibleSubject, setVisibleSubject] = useState(false)
     const [currentSubject, setCurrentSubject] = useState()
+    const [subjects, setSubjects] = useState()
 
     const url = 'http://192.168.0.107:3000/subjects'
 
@@ -26,9 +27,9 @@ export const Main = () => {
         try {
             const response = await fetch(url);
             const json = await response.json();
-            console.log(json);
+            //console.log(json);
             setSubjects(json);
-            setIsLoading(false);
+            //setIsLoading(false);
         } catch (error) {
             console.error(error);
         }
@@ -77,10 +78,30 @@ export const Main = () => {
     }
 
 
+    const getSubject = async (id) => {
+        console.log('card pressed = ', id)
+        try {
+            const response = await fetch(`${url}/${id}`);
+            const json = await response.json();
+            console.log('recived data ->', json);
+            setCurrentSubject(json);
+            console.log('set data ->', currentSubject);
+            setVisibleSubject(true);
+            setIsLoading(false)
+
+
+        } catch (error) {
+            console.error(error);
+            alert(`Что-то пошло не так${error}`)
+        }
+
+    }
 
 
 
-    const [subjects, setSubjects] = useState()
+
+
+
 
     const addSubject = (title) => {
         setSubjects(prevState => [
@@ -175,7 +196,7 @@ export const Main = () => {
             value, setValue,
             subjects, setSubjects,
             addSubject, handleAdd,
-            handleClose, url,
+            handleClose, url, getSubject,
             loadFromStorage, log, add,
             visibleSubject, setVisibleSubject, currentSubject,
             getSubjects, postSubject,
@@ -183,11 +204,15 @@ export const Main = () => {
 
         }}>
             <View style={styles.container}>
-                <Header />
+                <Header handleNavigate={() => navigation.navigate('Start')} />
                 <SubjectList />
                 <Subject />
                 <AddWindow />
-                <Button title={'Добавить очередь'} color={COLORS.blue} onPress={() => setVisibleModal(true)} />
+                <Button
+                    title={'Добавить очередь'}
+                    color={COLORS.blue}
+                    onPress={() => setVisibleModal(true)}
+                />
             </View>
         </MainContext.Provider>
 

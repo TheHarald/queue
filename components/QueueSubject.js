@@ -6,29 +6,15 @@ import { ImageButton } from './ImageButton';
 
 export const QueueSubject = ({ subject, students, deleteSubject, id }) => {
 
-    const { setIsLoading, setCurrentSubject, setVisibleSubject, currentSubject, url } = useContext(MainContext)
+    const { setIsLoading, setVisibleSubject, currentSubject, getSubject } = useContext(MainContext)
 
-    const getSubject = async () => {
-        console.log('card pressed = ', id)
-        try {
-            const response = await fetch(`${url}/${id}`);
-            const json = await response.json();
-            console.log(json);
-            setCurrentSubject(json);
-            //setVisibleSubject(true);
-            console.log('set -------------------- set', currentSubject)
-            //setIsLoading(false)
-
-        } catch (error) {
-            console.error(error);
-            alert(`Что-то пошло не так${error}`)
-        }
-
+    const handleGetSubject = () => {
+        getSubject(id)
     }
 
 
     return (
-        <TouchableOpacity style={styles.card} onPress={getSubject}>
+        <TouchableOpacity style={styles.card} onPress={handleGetSubject}>
             <View style={styles.title}>
                 <Text style={styles.text}>{subject}</Text>
                 <ImageButton deleteSubject={deleteSubject} id={id} />

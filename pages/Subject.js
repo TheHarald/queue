@@ -15,11 +15,13 @@ export const Subject = () => {
         <Modal visible={visibleSubject} >
             <View style={styles.main} >
 
-                {true ? <Text>Loadding</Text> :
-                    <View>
+                {isLoading ?
+                    <Text>Loadding</Text> :
+                    <View >
                         <Text style={styles.text}
                             onPress={() => setVisibleSubject(false)}>
-                            {currentSubject.subject}</Text>
+                            {currentSubject.subject}
+                        </Text>
 
                         <FlatList
                             data={currentSubject.students}
@@ -29,7 +31,16 @@ export const Subject = () => {
                             keyExtractor={(item) => item.position}
 
                         />
-                    </View>}
+                        <View style={{ paddingTop: 8 }}>
+                            <Button
+                                title={'Встать в очередь'}
+                                color={COLORS.blue}
+                                onPress={() => { console.log('adasd') }}
+                            />
+                        </View>
+
+                    </View>
+                }
 
             </View>
         </Modal>
