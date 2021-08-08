@@ -6,51 +6,31 @@ import { COLORS } from '../constants/theme';
 
 export const Start = () => {
 
-    const [value, setValue] = useState('')
-    const user = { name: '' }
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
 
-    const save = async () => {
-        try {
-            await AsyncStorage.setItem('userName', value)
-        } catch (error) {
-            alert(error)
-        }
-    }
 
-    const load = async () => {
-        try {
-            let name = await AsyncStorage.getItem('userName')
-            if (name !== null) {
-                setValue(name)
-            }
-        } catch (error) {
-            alert(error)
-        }
-    }
-
-    useEffect(() => {
-        load();
-    }, [])
-
-    const remove = async () => {
-        try {
-            await AsyncStorage.removeItem('userName')
-        } catch (error) {
-            alert(error)
-        } finally {
-            setValue('')
-        }
-    }
 
     return (
         <View style={styles.main}>
             <Image source={require('../assets/icons/logo.png')}
                 style={styles.image}
             />
-            <Text style={styles.text}>Your name:{value}</Text>
-            <TextInput style={styles.input} placeholder={'Ведите имя'} onChangeText={text => setValue(text)} />
-            <Button title={'Сохрнить'} color={COLORS.blue} onPress={save} />
-            <Button title={'Сбросить'} color={COLORS.red} onPress={remove} />
+            <TextInput
+                style={styles.input}
+                placeholder={'Имя'}
+                onChangeText={text => setName(text)}
+            />
+
+            <TextInput
+                style={styles.input}
+                placeholder={'Пароль'}
+                onChangeText={text => setPassword(text)}
+            />
+            <Button title={'Войти'} color={COLORS.blue} onPress={() => console.log(name, password)} />
+            <Text style={styles.textRef}
+                onPress={() => console.log('register')}
+            >Зарегистрироваться</Text>
         </View>
     )
 }
@@ -69,9 +49,9 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingLeft: 6,
         marginHorizontal: 8,
-        marginBottom: 8,
         fontSize: 17,
-        marginTop: 20
+        marginBottom: 10
+
     },
     image: {
         width: 106,
@@ -84,5 +64,13 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 17,
         alignSelf: 'center'
+    },
+    textRef: {
+        marginTop: 10,
+        fontSize: 17,
+        alignSelf: 'center',
+        color: COLORS.blue
+
     }
+
 })

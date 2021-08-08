@@ -9,7 +9,7 @@ import { TestContext } from './context'
 
 export default function App() {
   return (
-    <Main />
+    <Start />
   );
 }
 
