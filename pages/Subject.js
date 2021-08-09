@@ -4,13 +4,13 @@ import { Button } from '../components/Button';
 import { ImageButton } from '../components/ImageButton';
 import { QueuePerson } from '../components/QueuePerson';
 import { COLORS } from '../constants/theme';
-import { MainContext } from '../context';
+import { AppContext, MainContext } from '../context';
 
 
 export const Subject = () => {
 
-    const { visibleSubject, setVisibleSubject, currentSubject, isLoading } = useContext(MainContext)
-
+    const { visibleSubject, setVisibleSubject, currentSubject, isLoading, setInQueue } = useContext(MainContext)
+    const { user } = useContext(AppContext)
     return (
         <Modal visible={visibleSubject} >
             <View style={styles.main} >
@@ -32,10 +32,11 @@ export const Subject = () => {
 
                         />
                         <View style={{ paddingTop: 8 }}>
+                            {console.log(currentSubject.students.filter(item => item.name === user.name))}
                             <Button
                                 title={'Встать в очередь'}
                                 color={COLORS.blue}
-                                onPress={() => { console.log('adasd') }}
+                                onPress={setInQueue}
                             />
                         </View>
 

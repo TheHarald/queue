@@ -7,14 +7,14 @@ import { Button } from './Button';
 
 export const AddWindow = () => {
 
-    const { visibleModal, setValue, handleAdd, handleClose, add } = useContext(MainContext)
+    const { visibleModal, setValue, handleAdd, handleClose } = useContext(MainContext)
 
     return (
         <Modal visible={visibleModal}  >
             <View >
                 <Text style={styles.text}>Создание очереди</Text>
                 <TextInput style={styles.input} placeholder={'Дисциплина'} onChangeText={setValue} />
-                <Button title={'Добавить'} onPress={add} color={COLORS.green} />
+                <Button title={'Добавить'} onPress={handleAdd} color={COLORS.green} />
                 <Button title={'Закрыть'} onPress={handleClose} color={COLORS.red} />
             </View>
         </Modal>

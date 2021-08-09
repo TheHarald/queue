@@ -8,7 +8,7 @@ import { COLORS } from '../constants/theme'
 import { Button } from '../components/Button';
 import { AddWindow } from '../components/AddWindow';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MainContext } from '../context';
+import { AppContext, MainContext } from '../context';
 import { Subject } from './Subject';
 
 export const Main = ({ navigation }) => {
@@ -19,8 +19,10 @@ export const Main = ({ navigation }) => {
     const [visibleSubject, setVisibleSubject] = useState(false)
     const [currentSubject, setCurrentSubject] = useState()
     const [subjects, setSubjects] = useState()
+    const [isGetSubjects, setIsGetSubjects] = useState(true)
 
     const url = 'http://192.168.0.107:3000/subjects'
+    const { user } = useContext(AppContext)
 
 
     const getSubjects = async () => {
@@ -29,9 +31,9 @@ export const Main = ({ navigation }) => {
             const json = await response.json();
             //console.log(json);
             setSubjects(json);
-            //setIsLoading(false);
+            setIsGetSubjects(false)
         } catch (error) {
-            console.error(error);
+            alert('Нет доступа к базе данных');
         }
     }
 
@@ -65,7 +67,8 @@ export const Main = ({ navigation }) => {
 
         fetch(url, requestOptions)
             .then(response => response.json())
-            .then(data => { console.log(data); getSubjects() });
+            .then(data => { console.log(data); getSubjects() })
+            .catch('Нет доступа к базе данных');
     }
 
     const deleteSubject = (id) => {
@@ -74,7 +77,9 @@ export const Main = ({ navigation }) => {
         }
         fetch(`${url}/${id}`, requestOptions)
             .then(response => response.json())
-            .then(data => { console.log(data); getSubjects() });
+            .then(data => { console.log(data); getSubjects() })
+            .catch('Нет доступа к базе данных');
+
     }
 
 
@@ -83,9 +88,9 @@ export const Main = ({ navigation }) => {
         try {
             const response = await fetch(`${url}/${id}`);
             const json = await response.json();
-            console.log('recived data ->', json);
+            //console.log('recived data ->', json);
             setCurrentSubject(json);
-            console.log('set data ->', currentSubject);
+            //console.log('set data ->', currentSubject);
             setVisibleSubject(true);
             setIsLoading(false)
 
@@ -95,6 +100,34 @@ export const Main = ({ navigation }) => {
             alert(`Что-то пошло не так${error}`)
         }
 
+    }
+
+    const setInQueue = () => {
+        let pos = currentSubject.students.length + 1
+
+        currentSubject.students.push({
+            id: Date.now().toString(),
+            name: user.name,
+            position: pos.toString()
+        })
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: currentSubject.id,
+                subject: currentSubject.subject,
+                students: currentSubject.students
+
+            })
+        };
+
+        console.log(requestOptions)
+
+        fetch(`${url}/${currentSubject.id}`, requestOptions)
+            .then(response => response.json())
+            .then(data => { console.log(data); getSubjects() })
+            .catch('Нет доступа к базе данных');
     }
 
 
@@ -154,29 +187,6 @@ export const Main = ({ navigation }) => {
     }
 
 
-
-    const saveInStorage = async () => {
-        console.log('saving ------------------')
-        console.log(subjects)
-        try {
-            await AsyncStorage.setItem('subjects', JSON.stringify(subjects))
-        } catch (error) {
-            alert(error)
-        }
-    }
-
-    const loadFromStorage = async () => {
-        console.log('loadding')
-        try {
-            let subs = await AsyncStorage.getItem('subjects')
-            if (subs !== null) {
-                setSubjects(JSON.parse(subs))
-            }
-        } catch (error) {
-            alert(error)
-        }
-    }
-
     useEffect(() => {
         console.log('get subjects from db')
         getSubjects();
@@ -184,10 +194,7 @@ export const Main = ({ navigation }) => {
 
 
 
-    const add = async () => {
-        handleAdd();
-        saveInStorage();
-    }
+
 
 
     return (
@@ -196,11 +203,11 @@ export const Main = ({ navigation }) => {
             value, setValue,
             subjects, setSubjects,
             addSubject, handleAdd,
-            handleClose, url, getSubject,
-            loadFromStorage, log, add,
+            handleClose, url, getSubject, log,
             visibleSubject, setVisibleSubject, currentSubject,
             getSubjects, postSubject,
-            deleteSubject, isLoading, setIsLoading, setCurrentSubject
+            deleteSubject, isLoading, setIsLoading, setCurrentSubject,
+            isGetSubjects, setInQueue
 
         }}>
             <View style={styles.container}>
