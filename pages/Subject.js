@@ -9,8 +9,12 @@ import { AppContext, MainContext } from '../context';
 
 export const Subject = () => {
 
-    const { visibleSubject, setVisibleSubject, currentSubject, isLoading, setInQueue } = useContext(MainContext)
+    const { visibleSubject, setVisibleSubject, currentSubject, isLoading, setInQueue, quitQueue } = useContext(MainContext)
     const { user } = useContext(AppContext)
+
+
+
+
     return (
         <Modal visible={visibleSubject} >
             <View style={styles.main} >
@@ -32,12 +36,19 @@ export const Subject = () => {
 
                         />
                         <View style={{ paddingTop: 8 }}>
-                            {console.log(currentSubject.students.filter(item => item.name === user.name))}
-                            <Button
-                                title={'Встать в очередь'}
-                                color={COLORS.blue}
-                                onPress={setInQueue}
-                            />
+
+                            {currentSubject.students.filter(item => item.name === user.name).length > 0 ?
+                                <Button
+                                    title={'Выйти из очереди'}
+                                    color={COLORS.red}
+                                    onPress={quitQueue}
+                                /> :
+                                <Button
+                                    title={'Встать в очередь'}
+                                    color={COLORS.blue}
+                                    onPress={setInQueue}
+                                />}
+
                         </View>
 
                     </View>

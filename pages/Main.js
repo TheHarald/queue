@@ -122,12 +122,37 @@ export const Main = ({ navigation }) => {
             })
         };
 
-        console.log(requestOptions)
+        //console.log(requestOptions)
 
         fetch(`${url}/${currentSubject.id}`, requestOptions)
             .then(response => response.json())
             .then(data => { console.log(data); getSubjects() })
             .catch('Нет доступа к базе данных');
+    }
+
+
+    const quitQueue = () => {
+
+        console.log(currentSubject.students.filter(item => item.name !== user.name))
+        currentSubject.students = currentSubject.students.filter(item => item.name !== user.name)
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: currentSubject.id,
+                subject: currentSubject.subject,
+                students: currentSubject.students
+
+            })
+
+        };
+
+        fetch(`${url}/${currentSubject.id}`, requestOptions)
+            .then(response => response.json())
+            .then(data => { console.log(data); getSubjects() })
+            .catch('Нет доступа к базе данных');
+
     }
 
 
@@ -207,7 +232,7 @@ export const Main = ({ navigation }) => {
             visibleSubject, setVisibleSubject, currentSubject,
             getSubjects, postSubject,
             deleteSubject, isLoading, setIsLoading, setCurrentSubject,
-            isGetSubjects, setInQueue
+            isGetSubjects, setInQueue, quitQueue
 
         }}>
             <View style={styles.container}>
