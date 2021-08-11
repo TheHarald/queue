@@ -46,21 +46,7 @@ export const Main = ({ navigation }) => {
                 id: Date.now().toString(),
                 subject: title,
                 students: [
-                    {
-                        id: '13242',
-                        name: 'Ivanov Ivan',
-                        position: '1'
-                    },
-                    {
-                        id: '13241',
-                        name: 'Pavlov Ivan',
-                        position: '2'
-                    },
-                    {
-                        id: '131',
-                        name: 'Ivanov Armen',
-                        position: '3'
-                    }
+
                 ]
             })
         };
@@ -121,9 +107,7 @@ export const Main = ({ navigation }) => {
 
             })
         };
-
         //console.log(requestOptions)
-
         fetch(`${url}/${currentSubject.id}`, requestOptions)
             .then(response => response.json())
             .then(data => { console.log(data); getSubjects() })
@@ -153,44 +137,6 @@ export const Main = ({ navigation }) => {
             .then(data => { console.log(data); getSubjects() })
             .catch('Нет доступа к базе данных');
 
-    }
-
-
-
-
-
-
-
-    const addSubject = (title) => {
-        setSubjects(prevState => [
-            ...prevState,
-            {
-                id: Date.now().toString(),
-                subject: title,
-                students: [
-                    {
-                        name: 'Ivanov Ivan',
-                        position: '1'
-                    },
-                    {
-                        name: 'Pavlov Ivan',
-                        position: '2'
-                    },
-                    {
-                        name: 'Ivanov Armen',
-                        position: '3'
-                    }
-                ]
-            }
-        ]);
-
-
-    }
-
-    const log = () => {
-        console.log('====================================');
-        console.log(subjects);
-        console.log('====================================');
     }
 
 
@@ -226,9 +172,8 @@ export const Main = ({ navigation }) => {
         <MainContext.Provider value={{
             visibleModal, setVisibleModal,
             value, setValue,
-            subjects, setSubjects,
-            addSubject, handleAdd,
-            handleClose, url, getSubject, log,
+            subjects, setSubjects, handleAdd,
+            handleClose, url, getSubject,
             visibleSubject, setVisibleSubject, currentSubject,
             getSubjects, postSubject,
             deleteSubject, isLoading, setIsLoading, setCurrentSubject,

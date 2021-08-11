@@ -9,10 +9,9 @@ import { AppContext, MainContext } from '../context';
 
 export const Subject = () => {
 
-    const { visibleSubject, setVisibleSubject, currentSubject, isLoading, setInQueue, quitQueue } = useContext(MainContext)
+    const { visibleSubject, setVisibleSubject, currentSubject, isLoading,
+        setInQueue, quitQueue, isGetSubjects, getSubject } = useContext(MainContext)
     const { user } = useContext(AppContext)
-
-
 
 
     return (
@@ -32,7 +31,9 @@ export const Subject = () => {
                             renderItem={({ item }) => (
                                 <QueuePerson student={item.name} position={item.position} />
                             )}
-                            keyExtractor={(item) => item.position}
+                            keyExtractor={(item) => item.id}
+                            refreshing={isGetSubjects}
+                            onRefresh={() => getSubject(currentSubject.id)}
 
                         />
                         <View style={{ paddingTop: 8 }}>

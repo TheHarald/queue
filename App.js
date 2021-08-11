@@ -17,8 +17,6 @@ export default function App() {
 
   return (
     <AppContext.Provider value={{ user, setUser }}>
-
-
       <NavigationContainer>
         <AuthStack.Navigator
           screenOptions={{

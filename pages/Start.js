@@ -6,6 +6,8 @@ import { COLORS } from '../constants/theme';
 import { AppContext } from '../context';
 
 
+
+
 export const Start = ({ navigation }) => {
 
     const [name, setName] = useState('')
@@ -23,6 +25,7 @@ export const Start = ({ navigation }) => {
 
     return (
         <View style={styles.main}>
+
             <Image source={require('../assets/icons/logo.png')}
                 style={styles.image}
             />
