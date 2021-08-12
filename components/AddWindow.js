@@ -10,10 +10,17 @@ export const AddWindow = () => {
     const { visibleModal, setValue, handleAdd, handleClose } = useContext(MainContext)
 
     return (
-        <Modal visible={visibleModal}  >
-            <View >
+        <Modal visible={visibleModal}
+            animationType="slide"
+        >
+            <View style={styles.window}>
                 <Text style={styles.text}>Создание очереди</Text>
-                <TextInput style={styles.input} placeholder={'Дисциплина'} onChangeText={setValue} />
+                <TextInput
+                    style={styles.input}
+                    placeholder={'Дисциплина'}
+                    onChangeText={setValue}
+                    maxLength={40}
+                />
                 <Button title={'Добавить'} onPress={handleAdd} color={COLORS.green} />
                 <Button title={'Закрыть'} onPress={handleClose} color={COLORS.red} />
             </View>
@@ -23,11 +30,7 @@ export const AddWindow = () => {
 }
 const styles = StyleSheet.create({
     window: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: COLORS.black,
-        borderRadius: 10,
-        opacity: 1
+        paddingTop: Platform.OS === 'ios' ? 16 : 8
     },
     input: {
         borderRadius: 6,

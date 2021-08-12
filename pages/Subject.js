@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { FlatList, Modal, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Modal, StyleSheet, Text, View, Platform } from 'react-native';
 import { Button } from '../components/Button';
 import { ImageButton } from '../components/ImageButton';
 import { QueuePerson } from '../components/QueuePerson';
+import { TextButton } from '../components/TextButton';
 import { COLORS } from '../constants/theme';
 import { AppContext, MainContext } from '../context';
 
@@ -15,16 +16,26 @@ export const Subject = () => {
 
 
     return (
-        <Modal visible={visibleSubject} >
+        <Modal visible={visibleSubject}
+            animationType='slide'>
             <View style={styles.main} >
 
                 {isLoading ?
                     <Text>Loadding</Text> :
                     <View >
-                        <Text style={styles.text}
-                            onPress={() => setVisibleSubject(false)}>
-                            {currentSubject.subject}
-                        </Text>
+
+                        <View style={styles.header}>
+                            <TextButton
+                                title={'Назад'}
+                                color={COLORS.blue}
+                                onPress={() => setVisibleSubject(false)}
+                            />
+
+                            <Text style={styles.text}>
+                                {currentSubject.subject.substring(0, 20) +
+                                    (currentSubject.subject.length > 20 ? '...' : '')}
+                            </Text>
+                        </View>
 
                         <FlatList
                             data={currentSubject.students}
@@ -63,10 +74,9 @@ export const Subject = () => {
 const styles = StyleSheet.create({
 
     text: {
-        fontSize: 20,
+        fontSize: 17,
         alignSelf: 'center',
-        marginTop: 18,
-        marginBottom: 10
+        marginLeft: 30
 
     },
     button: {
@@ -76,7 +86,14 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
-        backgroundColor: COLORS.gray
+        backgroundColor: COLORS.gray,
+        paddingTop: Platform.OS === 'ios' ? 16 : 0
+    },
+    header: {
+        marginTop: 18,
+        marginBottom: 10,
+        flexDirection: 'row',
+        marginHorizontal: 8
     }
 
 })

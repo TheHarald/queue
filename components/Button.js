@@ -4,7 +4,6 @@ import { COLORS } from '../constants/theme'
 
 export const Button = ({ title, onPress, color }) => {
 
-
     return (
         <TouchableOpacity style={{ ...styles.button, backgroundColor: color }} onPress={onPress}>
             <Text style={styles.text}>{title}</Text>

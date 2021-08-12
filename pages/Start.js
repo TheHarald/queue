@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '../components/Button';
 import { COLORS } from '../constants/theme';
 import { AppContext } from '../context';
-
+import Main_Icon from '../assets/logos/Main_Logo';
 
 
 
@@ -26,9 +26,10 @@ export const Start = ({ navigation }) => {
     return (
         <View style={styles.main}>
 
-            <Image source={require('../assets/icons/logo.png')}
-                style={styles.image}
-            />
+            <View style={styles.image}>
+                <Main_Icon />
+            </View>
+
             <TextInput
                 style={styles.input}
                 placeholder={'Имя'}
@@ -68,8 +69,6 @@ const styles = StyleSheet.create({
 
     },
     image: {
-        width: 106,
-        height: 79,
         alignSelf: 'center',
         marginTop: 110,
         marginBottom: 100

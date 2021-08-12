@@ -45,9 +45,7 @@ export const Main = ({ navigation }) => {
             body: JSON.stringify({
                 id: Date.now().toString(),
                 subject: title,
-                students: [
-
-                ]
+                students: []
             })
         };
 

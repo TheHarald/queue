@@ -7,7 +7,7 @@ import { AppContext, MainContext } from '../context';
 
 export const Header = ({ handleNavigate }) => {
 
-    const { loadFromStorage, log, getSubjects, setVisibleSubject } = useContext(MainContext)
+    const { getSubjects, setVisibleSubject } = useContext(MainContext)
     const { user } = useContext(AppContext)
 
     return (

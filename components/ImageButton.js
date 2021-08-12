@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, Alert, View } from 'react-native';
+import Delete from '../assets/icons/Delete';
 import { COLORS } from '../constants/theme'
+
 
 export const ImageButton = ({ deleteSubject, id }) => {
 
@@ -27,10 +29,13 @@ export const ImageButton = ({ deleteSubject, id }) => {
 
     return (
         <TouchableOpacity style={styles.button} onPress={handleDeleteWithAlert}>
-            <Image
-                style={styles.logo}
-                source={require('../assets/icons/delete.png')}
-            />
+
+            <View style={styles.button}>
+                <Delete />
+            </View>
+
+
+
         </TouchableOpacity>
     )
 }
