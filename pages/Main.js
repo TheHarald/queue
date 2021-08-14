@@ -23,6 +23,7 @@ export const Main = ({ navigation }) => {
 
     const url = 'http://192.168.43.240:3000/subjects'
     const { user } = useContext(AppContext)
+    //comment
 
 
     const getSubjects = async () => {
