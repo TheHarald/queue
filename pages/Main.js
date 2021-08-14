@@ -21,7 +21,7 @@ export const Main = ({ navigation }) => {
     const [subjects, setSubjects] = useState()
     const [isGetSubjects, setIsGetSubjects] = useState(true)
 
-    const url = 'http://192.168.0.107:3000/subjects'
+    const url = 'http://192.168.43.240:3000/subjects'
     const { user } = useContext(AppContext)
 
 
@@ -115,7 +115,7 @@ export const Main = ({ navigation }) => {
 
     const quitQueue = () => {
 
-        console.log(currentSubject.students.filter(item => item.name !== user.name))
+        //console.log(currentSubject.students.filter(item => item.name !== user.name))
         currentSubject.students = currentSubject.students.filter(item => item.name !== user.name)
 
         const requestOptions = {
